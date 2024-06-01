@@ -1,12 +1,9 @@
-import './App.css'
+import '@silevis/reactgrid/styles.css';
+import './App.css';
+import Home from './Containers/Home';
 
 function App() {
-
-  return (
-    <>
-      
-    </>
-  )
+  return <Home />;
 }
 
-export default App
+export default App;
