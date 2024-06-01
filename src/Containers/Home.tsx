@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import Table from '../Components/Table';
 
 const Home = () => {
-  const [data, setData] = useState();
-  useEffect(() => {
-    fetch(`http://localhost:3000/data`)
-      .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch((err) => console.error(err));
-  }, []);
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: ['data-query'],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:3000/data`);
+      return await res.json();
+    },
+  });
 
   return (
     <div>
-      <Table data={data} />
+      {!isLoading && !isError && <Table data={data} />}
     </div>
   );
 };
