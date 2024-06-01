@@ -1,33 +1,40 @@
 export interface RowDataType {
   id: string;
-  parentId: string;
-  value: number[];
+  parentId: string | null;
+  value: string[];
+  isTotal: boolean;
 }
 
 export interface RowsType {
-  LiquidFunds: RowDataType;
+  'Liquid funds': RowDataType;
   'Cashbox-Bank': RowDataType;
   Inflow: RowDataType;
   Sales: RowDataType;
-  LoanDisbursement: RowDataType;
-  PrivateDepositsEquity: RowDataType;
-  OtherIncomingPayments: RowDataType;
-  OtherIncome: RowDataType;
+  'Loan disbursement': RowDataType;
+  'Private deposits/equity': RowDataType;
+  'Other incoming payments': RowDataType;
+  'Other income': RowDataType;
+  'Cash in (total)': RowDataType;
   Outflow: RowDataType;
-  UseOfGoodsMaterials: RowDataType;
-  HeatingElectricityWaterGas: RowDataType;
-  PersonnelCosts: RowDataType;
-  RoomCostsRent: RowDataType;
-  MarketingAdvertisement: RowDataType;
-  VehicleCostsOperational: RowDataType;
-  TravelingExpenses: RowDataType;
-  TelephoneFaxInternet: RowDataType;
-  OfficeSuppliesPackaging: RowDataType;
-  RepairsMaintenance: RowDataType;
-  InsuranceCompany: RowDataType;
-  ContributionsFees: RowDataType;
+  'Use of goods/materials': RowDataType;
+  'Heating, electricity, water, gas': RowDataType;
+  'Personnel costs': RowDataType;
+  'Room costs / rent': RowDataType;
+  'Marketing and advertisement': RowDataType;
+  'Vehicle costs (operational)': RowDataType;
+  'Traveling expenses': RowDataType;
+  'Telephone, Fax, Internet': RowDataType;
+  'Office supplies, packaging': RowDataType;
+  'Repairs, maintenance': RowDataType;
+  'Insurance (company)': RowDataType;
+  'Contributions and fees': RowDataType;
   Leasing: RowDataType;
-  AdviceBookkeeping: RowDataType;
-  CostOfCapitalInterest: RowDataType;
-  RepaymentLoan: RowDataType;
+  'Advice and bookkeeping': RowDataType;
+  'Cost of capital / interest': RowDataType;
+  'Repayment (loan)': RowDataType;
+  'Cash out (total)': RowDataType;
+  Total: RowDataType;
+  Cumulative: RowDataType;
+  'Credit line': RowDataType;
+  'Credit line overdraft': RowDataType;
 }

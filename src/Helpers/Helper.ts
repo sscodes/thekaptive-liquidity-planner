@@ -26,7 +26,7 @@ export const generateRow = (val: string, rowData: RowDataType) => {
     } else if (rowData.value.length > 0)
       cells.push({
         columnId: HEADER.cells[i].text,
-        text: rowData.value[j - 1].toString(),
+        text: rowData.value[j - 1],
         type: 'text',
       });
     else cells.push({ columnId: HEADER.cells[i].text, text: '', type: 'text' });

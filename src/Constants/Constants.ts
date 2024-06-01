@@ -14,6 +14,7 @@ export const HEADER = {
     { type: 'header', text: 'Oct' },
     { type: 'header', text: 'Nov' },
     { type: 'header', text: 'Dec' },
+    { type: 'header', text: 'Total' },
   ],
 };
 
