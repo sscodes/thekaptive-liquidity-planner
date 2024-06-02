@@ -70,7 +70,6 @@ const FinancialLiquidityTable = () => {
           id: 'color-picker',
           label: 'Change Header Colour',
           handler: () => {
-            console.log('hello');
             setShow();
           },
         },
@@ -84,6 +83,7 @@ const FinancialLiquidityTable = () => {
     let row = changes[0].rowId.toString();
     let tempData = JSON.parse(JSON.stringify(data));
     tempData[row].value[col] = changes[0].newCell.text;
+    console.log(tempData);
     setData(tempData);
   };
 
