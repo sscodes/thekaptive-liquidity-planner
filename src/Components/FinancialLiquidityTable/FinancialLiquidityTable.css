@@ -1,0 +1,9 @@
+.table {
+  max-width: 90vw;
+  overflow-x: scroll;
+}
+
+.data-cell{
+  display: flex;
+  justify-content: end;
+}

@@ -1,0 +1,5 @@
+.colour-pickers-section {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}

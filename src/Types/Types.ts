@@ -38,3 +38,16 @@ export interface RowsType {
   'Credit line': RowDataType;
   'Credit line overdraft': RowDataType;
 }
+
+export type CellType = {
+  type: string;
+  text: string;
+  className?: string;
+  columnId?: string;
+};
+
+export type RowType = {
+  rowId: string;
+  cells: CellType[];
+  height: number;
+};
