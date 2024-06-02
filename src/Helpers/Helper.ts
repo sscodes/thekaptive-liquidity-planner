@@ -71,3 +71,71 @@ export const generateRow = (
     height: 47,
   };
 };
+
+const convertDataToInteger = (data: string) => {
+  if (data.length === 0) return 0;
+  const withoutThousandsSeparator = data.replace(/\./g, '');
+  const withStandardDecimalSeparator = withoutThousandsSeparator.replace(
+    ',',
+    '.'
+  );
+  const number = parseFloat(withStandardDecimalSeparator);
+  return Math.round(number);
+};
+
+export const generateBarChartData = (
+  nameList: string[],
+  inflowList: string[],
+  outflowList: string[]
+) => {
+  let inflow = inflowList.map((val: string) => convertDataToInteger(val));
+  let outflow = outflowList.map((val: string) => convertDataToInteger(val));
+  let data = [];
+  for (let index = 0; index < nameList.length; index++) {
+    data.push({
+      name: nameList[index],
+      inflow: inflow[index],
+      outflow: outflow[index],
+    });
+  }
+  return data;
+};
+
+export const generateLineChartData = (
+  nameList: string[],
+  values: string[],
+  paramName: string
+) => {
+  let numValues = values.map((val: string) => convertDataToInteger(val));
+  let data = [];
+  for (let index = 0; index < nameList.length; index++) {
+    data.push({
+      name: nameList[index],
+      [paramName]: numValues[index],
+    });
+  }
+  return data;
+};
+
+export const getGraphData = (data: RowsType) => {
+  const namesList = HEADER_VALUES.slice(1, HEADER_VALUES.length - 1);
+  let length = namesList.length;
+  let chartData = [
+    generateLineChartData(
+      namesList,
+      data['Cashbox-Bank']['value'].slice(0, length),
+      'Cashbox/bank'
+    ),
+    generateLineChartData(
+      namesList,
+      data['Credit line overdraft']['value'].slice(0, length),
+      'Credit line overdraft'
+    ),
+    generateBarChartData(
+      namesList,
+      data['Cash in (total)']['value'].slice(0, length),
+      data['Cash out (total)']['value'].slice(0, length)
+    ),
+  ]
+  return chartData;
+};

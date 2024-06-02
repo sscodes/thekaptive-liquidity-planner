@@ -2,6 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import ColourPicker from '../Components/ColourPicker/ColourPicker';
 import FinancialLiquidityTable from '../Components/FinancialLiquidityTable/FinancialLiquidityTable';
+import Graph from '../Components/Graph/Graph';
+import { getGraphData } from '../Helpers/Helper';
 
 const Home = () => {
   const [showColourPickerModal, setShowColourPickerModal] = useState(false);
@@ -16,7 +18,7 @@ const Home = () => {
   });
 
   return (
-    <div>
+    <div className='home'>
       {showColourPickerModal && (
         <ColourPicker
           showColourPickerModal={showColourPickerModal}
@@ -25,6 +27,7 @@ const Home = () => {
           setBackground={setBackground}
         />
       )}
+      {!isLoading && !isError && <Graph data={getGraphData(data)} />}
       {!isLoading && !isError && (
         <FinancialLiquidityTable
           headerColour={colour}
