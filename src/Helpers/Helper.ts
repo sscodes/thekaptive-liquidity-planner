@@ -6,6 +6,9 @@ const generateHeaderCell: (text: string) => CellType = (text: string) => {
     type: 'text',
     text: text,
     className: 'col-header-cell',
+    style: {
+      fontSize: '1.7em',
+    },
   };
 };
 
@@ -47,21 +50,37 @@ export const generateRow = (
         columnId: HEADER.cells[i].text,
         text: val,
         type: 'text',
-        className: 'row-header-cell',
+        style: {
+          fontSize: '1.4em',
+          background: !rowData.parentId ? '#D6D6D6' : '',
+        },
+        className: `row-header-cell ${
+          rowData.isTotal || !rowData.parentId ? 'total' : ''
+        }`,
       });
     } else if (rowData.value.length > 0)
       cells.push({
         columnId: HEADER.cells[i].text,
         text: rowData.value[j - 1],
         type: 'text',
-        className: 'data-cell',
+        className: `data-cell ${
+          rowData.isTotal || !rowData.parentId ? 'total' : ''
+        }`,
+        style: {
+          background: !rowData.parentId ? '#D6D6D6' : '',
+        },
       });
     else
       cells.push({
         columnId: HEADER.cells[i].text,
         text: '',
         type: 'text',
-        className: 'data-cell',
+        className: `data-cell ${
+          rowData.isTotal || !rowData.parentId ? 'total' : ''
+        }`,
+        style: {
+          background: !rowData.parentId ? '#D6D6D6' : '',
+        },
       });
     j++;
   }
@@ -136,6 +155,6 @@ export const getGraphData = (data: RowsType) => {
       data['Cash in (total)']['value'].slice(0, length),
       data['Cash out (total)']['value'].slice(0, length)
     ),
-  ]
+  ];
   return chartData;
 };

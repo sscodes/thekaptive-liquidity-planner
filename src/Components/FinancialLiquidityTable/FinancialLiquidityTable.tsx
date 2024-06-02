@@ -38,7 +38,7 @@ const FinancialLiquidityTable = ({
   };
 
   const [columns, setColumns] = useState(initColumns);
-  const [rows, setRows] = useState(initRows);
+  const [rows, ] = useState(initRows);
 
   const handleColumnResize = (ci: Id, width: number) => {
     setColumns((prevColumns) => {
@@ -52,7 +52,9 @@ const FinancialLiquidityTable = ({
 
   const handleContextMenu = (
     selectedRowIds: Id[],
+    // @ts-ignore
     selectedColIds: Id[],
+    // @ts-ignore
     selectionMode: SelectionMode,
     menuOptions: MenuOption[]
   ): MenuOption[] => {
@@ -81,7 +83,6 @@ const FinancialLiquidityTable = ({
             font-weight: 700;
             display: flex;
             justify-content: center;
-            font-size: 1.4rem;
           }
 
           .rg-cell.rg-text-cell.valid.col-header-cell{
@@ -98,6 +99,7 @@ const FinancialLiquidityTable = ({
         enableRowSelection
         enableFillHandle
         onColumnResized={handleColumnResize}
+        // @ts-ignore
         onContextMenu={handleContextMenu}
       />
     </Box>

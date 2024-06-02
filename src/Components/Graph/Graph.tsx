@@ -30,7 +30,9 @@ function Graph({ data }: PropType) {
     name: entry.name,
     inflow: entry.inflow,
     outflow: entry.outflow,
+    // @ts-ignore
     'Cashbox/bank': data[0][index]['Cashbox/bank'],
+    // @ts-ignore
     'Credit line overdraft': data[1][index]['Credit line overdraft'],
   }));
   console.log(combinedData);  

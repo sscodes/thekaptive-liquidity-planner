@@ -7,3 +7,7 @@
   display: flex;
   justify-content: end;
 }
+
+.total{
+  font-weight: 700;
+}
