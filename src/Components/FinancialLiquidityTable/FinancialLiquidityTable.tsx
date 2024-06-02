@@ -1,25 +1,27 @@
 import { Box } from '@mui/material';
-import { Id, MenuOption, ReactGrid } from '@silevis/reactgrid';
-import { Dispatch, SetStateAction, useState } from 'react';
+import {
+  CellChange,
+  Id,
+  MenuOption,
+  ReactGrid,
+  TextCell,
+} from '@silevis/reactgrid';
+import { useEffect, useState } from 'react';
+import { HEADER_VALUES } from '../../Constants/Constants';
 import {
   generateColumn,
   generateHeaderRow,
   generateRow,
 } from '../../Helpers/Helper';
 import { RowType, RowsType } from '../../Types/Types';
+import {
+  useColourPicker,
+  useColourPickerModalStore,
+  useDataStore,
+} from '../../Zustand/Store';
 import './FinancialLiquidityTable.css';
 
-const FinancialLiquidityTable = ({
-  headerColour,
-  headerBackground,
-  data,
-  setShowColourPickerModal,
-}: {
-  headerColour: string;
-  headerBackground: string;
-  data: RowsType;
-  setShowColourPickerModal: Dispatch<SetStateAction<boolean>>;
-}) => {
+const FinancialLiquidityTable = () => {
   const HEADER: RowType = generateHeaderRow();
   const initColumns = () => {
     let cols = [];
@@ -28,17 +30,20 @@ const FinancialLiquidityTable = ({
     }
     return cols;
   };
+  const { data, setData } = useDataStore((state) => state);
+  const setShow = useColourPickerModalStore((state) => state.setShow);
+  const { colour, background } = useColourPicker((state) => state);
 
-  const initRows = () => {
+  const [columns, setColumns] = useState(initColumns);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
     let rows: RowType[] = [HEADER];
     for (let i in data) {
       rows.push(generateRow(i, data[i as keyof RowsType], HEADER));
     }
-    return rows;
-  };
-
-  const [columns, setColumns] = useState(initColumns);
-  const [rows, ] = useState(initRows);
+    setRows(rows);
+  }, [data]);
 
   const handleColumnResize = (ci: Id, width: number) => {
     setColumns((prevColumns) => {
@@ -66,7 +71,7 @@ const FinancialLiquidityTable = ({
           label: 'Change Header Colour',
           handler: () => {
             console.log('hello');
-            setShowColourPickerModal(true);
+            setShow();
           },
         },
       ];
@@ -74,19 +79,27 @@ const FinancialLiquidityTable = ({
     return menuOptions;
   };
 
+  const handleChanges = (changes: CellChange<TextCell>[]) => {
+    let col = HEADER_VALUES.indexOf(changes[0].columnId.toString()) - 1;
+    let row = changes[0].rowId.toString();
+    let tempData = JSON.parse(JSON.stringify(data));
+    tempData[row].value[col] = changes[0].newCell.text;
+    setData(tempData);
+  };
+
   return (
     <Box className='table'>
       <style>
         {`
           .col-header-cell {
-            background-color: ${headerBackground};
+            background-color: ${background};
             font-weight: 700;
             display: flex;
             justify-content: center;
           }
 
           .rg-cell.rg-text-cell.valid.col-header-cell{
-            color: ${headerColour};
+            color: ${colour};
           }
         `}
       </style>
@@ -101,6 +114,7 @@ const FinancialLiquidityTable = ({
         onColumnResized={handleColumnResize}
         // @ts-ignore
         onContextMenu={handleContextMenu}
+        onCellsChanged={handleChanges}
       />
     </Box>
   );

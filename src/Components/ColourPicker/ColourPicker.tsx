@@ -7,8 +7,12 @@ import {
   Slide,
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import { Dispatch, SetStateAction, forwardRef, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { SketchPicker } from 'react-color';
+import {
+  useColourPicker,
+  useColourPickerModalStore,
+} from '../../Zustand/Store';
 import './ColourPicker.css';
 
 const Transition = forwardRef(function Transition(
@@ -20,32 +24,25 @@ const Transition = forwardRef(function Transition(
   return <Slide direction='up' ref={ref} {...props} />;
 });
 
-const ColourPicker = ({
-  showColourPickerModal,
-  setShowColourPickerModal,
-  setColour,
-  setBackground,
-}: {
-  showColourPickerModal: boolean;
-  setShowColourPickerModal: Dispatch<SetStateAction<boolean>>;
-  setColour: Dispatch<SetStateAction<string>>;
-  setBackground: Dispatch<SetStateAction<string>>;
-}) => {
+const ColourPicker = () => {
   const [colour1, setColour1] = useState('black');
   const [colour2, setColour2] = useState('gray');
+
+  const { visible, setHide } = useColourPickerModalStore((state) => state);
+  const { setColour, setBackground } = useColourPicker((state) => state);
 
   const setColours = () => {
     setColour(colour1);
     setBackground(colour2);
-    setShowColourPickerModal(false);
+    setHide();
   };
 
   return (
     <Dialog
-      open={showColourPickerModal}
+      open={visible}
       TransitionComponent={Transition}
       keepMounted
-      onClose={() => setShowColourPickerModal(false)}
+      onClose={() => setHide()}
       aria-describedby='alert-dialog-slide-description'
     >
       <DialogTitle>

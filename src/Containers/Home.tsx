@@ -1,15 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import ColourPicker from '../Components/ColourPicker/ColourPicker';
 import FinancialLiquidityTable from '../Components/FinancialLiquidityTable/FinancialLiquidityTable';
 import Graph from '../Components/Graph/Graph';
-import { getGraphData } from '../Helpers/Helper';
+import { useColourPickerModalStore, useDataStore } from '../Zustand/Store';
 
 const Home = () => {
-  const [showColourPickerModal, setShowColourPickerModal] = useState(false);
-  const [colour, setColour] = useState('black');
-  const [background, setBackground] = useState('gray');
-  const { data, isLoading, error, isError } = useQuery({
+  const { data, isError, isLoading, error } = useQuery({
     queryKey: ['data-query'],
     queryFn: async () => {
       const res = await fetch(`http://localhost:3000/data`);
@@ -17,25 +14,23 @@ const Home = () => {
     },
   });
 
+  const setData = useDataStore((state) => state.setData);
+
+  useEffect(() => {
+    if (!isLoading && !isError) setData(data);
+  }, [data, isLoading, isError]);
+
+  const colourPickerVisible = useColourPickerModalStore(
+    (state) => state.visible
+  );
+
   return (
-    <div className='home'>
-      {showColourPickerModal && (
-        <ColourPicker
-          showColourPickerModal={showColourPickerModal}
-          setShowColourPickerModal={setShowColourPickerModal}
-          setColour={setColour}
-          setBackground={setBackground}
-        />
-      )}
-      {!isLoading && !isError && <Graph data={getGraphData(data)} />}
-      {!isLoading && !isError && (
-        <FinancialLiquidityTable
-          headerColour={colour}
-          headerBackground={background}
-          setShowColourPickerModal={setShowColourPickerModal}
-          data={data}
-        />
-      )}
+    <div>
+      {colourPickerVisible && <ColourPicker />}
+      <div className='home'>
+        {!isLoading && !isError && <Graph />}
+        {!isLoading && !isError && <FinancialLiquidityTable />}
+      </div>
       {isError && error.message}
     </div>
   );

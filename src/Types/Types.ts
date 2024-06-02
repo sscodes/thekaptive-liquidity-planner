@@ -51,3 +51,21 @@ export type RowType = {
   cells: CellType[];
   height: number;
 };
+
+export type DataTypeStore = {
+  data: RowsType | undefined;
+  setData: (req: RowsType) => void;
+};
+
+export type ColourPickerModalStore = {
+  visible: boolean;
+  setShow: () => void;
+  setHide: () => void;
+};
+
+export type ColourPickerTypeStore = {
+  colour: string;
+  background: string;
+  setColour: (req: string) => void;
+  setBackground: (req: string) => void;
+};
