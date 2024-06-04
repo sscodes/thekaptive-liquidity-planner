@@ -35,7 +35,7 @@ const FinancialLiquidityTable = () => {
   const { colour, background } = useColourPicker((state) => state);
 
   const [columns, setColumns] = useState(initColumns);
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<RowType[]>([]);
 
   useEffect(() => {
     let rows: RowType[] = [HEADER];
@@ -57,9 +57,7 @@ const FinancialLiquidityTable = () => {
 
   const handleContextMenu = (
     selectedRowIds: Id[],
-    // @ts-ignore
     selectedColIds: Id[],
-    // @ts-ignore
     selectionMode: SelectionMode,
     menuOptions: MenuOption[]
   ): MenuOption[] => {
@@ -103,6 +101,7 @@ const FinancialLiquidityTable = () => {
           }
         `}
       </style>
+      {/* @ts-ignore */}
       <ReactGrid
         columns={columns}
         rows={rows}
@@ -112,7 +111,6 @@ const FinancialLiquidityTable = () => {
         enableRowSelection
         enableFillHandle
         onColumnResized={handleColumnResize}
-        // @ts-ignore
         onContextMenu={handleContextMenu}
         onCellsChanged={handleChanges}
       />

@@ -1,7 +1,0 @@
-.home{
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    /* max-height: 90vh;
-    overflow-y: hidden; */
-}

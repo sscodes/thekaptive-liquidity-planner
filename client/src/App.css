@@ -1,0 +1,7 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-height: 95vh;
+  overflow-y: scroll;
+}

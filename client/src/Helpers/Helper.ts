@@ -7,7 +7,7 @@ const generateHeaderCell: (text: string) => CellType = (text: string) => {
     text: text,
     className: 'col-header-cell',
     style: {
-      fontSize: '1.7em',
+      fontSize: '1.5em',
     },
   };
 };

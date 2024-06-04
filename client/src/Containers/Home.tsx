@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { fetchData } from '../API/API';
 import ColourPicker from '../Components/ColourPicker/ColourPicker';
 import FinancialLiquidityTable from '../Components/FinancialLiquidityTable/FinancialLiquidityTable';
 import Graph from '../Components/Graph/Graph';
@@ -8,10 +9,7 @@ import { useColourPickerModalStore, useDataStore } from '../Zustand/Store';
 const Home = () => {
   const { data, isError, isLoading, error } = useQuery({
     queryKey: ['data-query'],
-    queryFn: async () => {
-      const res = await fetch(`http://localhost:3000/data`);
-      return await res.json();
-    },
+    queryFn: fetchData,
   });
 
   const setData = useDataStore((state) => state.setData);
