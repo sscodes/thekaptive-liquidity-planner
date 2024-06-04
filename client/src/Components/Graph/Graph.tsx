@@ -44,7 +44,7 @@ function Graph() {
   return (
     <>
       {combinedData !== null && (
-        <ResponsiveContainer width='100%' aspect={5}>
+        <ResponsiveContainer width='100%' aspect={4.7}>
           <ComposedChart
             width={500}
             height={300}
