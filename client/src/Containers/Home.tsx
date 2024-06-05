@@ -15,7 +15,7 @@ const Home = () => {
   const setData = useDataStore((state) => state.setData);
 
   useEffect(() => {
-    if (!isLoading && !isError) setData(data);
+    if (!isLoading && !isError) setData(data.data);
   }, [data, isLoading, isError]);
 
   const colourPickerVisible = useColourPickerModalStore(
