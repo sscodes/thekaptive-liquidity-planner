@@ -13,7 +13,14 @@ import {
   generateHeaderRow,
   generateRow,
 } from '../../Helpers/Helper';
-import { RowType, RowsType } from '../../Types/Types';
+import {
+  ColType,
+  ColourPickerModalStore,
+  ColourPickerTypeStore,
+  DataTypeStore,
+  RowType,
+  RowsType,
+} from '../../Types/Types';
 import {
   useColourPicker,
   useColourPickerModalStore,
@@ -30,9 +37,13 @@ const FinancialLiquidityTable = () => {
     }
     return cols;
   };
-  const { data, setData } = useDataStore((state) => state);
-  const setShow = useColourPickerModalStore((state) => state.setShow);
-  const { colour, background } = useColourPicker((state) => state);
+  const { data, setData } = useDataStore((state: DataTypeStore) => state);
+  const setShow = useColourPickerModalStore(
+    (state: ColourPickerModalStore) => state.setShow
+  );
+  const { colour, background } = useColourPicker(
+    (state: ColourPickerTypeStore) => state
+  );
 
   const [columns, setColumns] = useState(initColumns);
   const [rows, setRows] = useState<RowType[]>([]);
@@ -46,7 +57,7 @@ const FinancialLiquidityTable = () => {
   }, [data]);
 
   const handleColumnResize = (ci: Id, width: number) => {
-    setColumns((prevColumns) => {
+    setColumns((prevColumns: ColType[]) => {
       const columnIndex = prevColumns.findIndex((el) => el.columnId === ci);
       const resizedColumn = prevColumns[columnIndex];
       const updatedColumn = { ...resizedColumn, width };
@@ -57,7 +68,9 @@ const FinancialLiquidityTable = () => {
 
   const handleContextMenu = (
     selectedRowIds: Id[],
+    // @ts-ignore
     selectedColIds: Id[],
+    // @ts-ignore
     selectionMode: SelectionMode,
     menuOptions: MenuOption[]
   ): MenuOption[] => {

@@ -5,6 +5,7 @@ import ColourPicker from '../Components/ColourPicker/ColourPicker';
 import FinancialLiquidityTable from '../Components/FinancialLiquidityTable/FinancialLiquidityTable';
 import Graph from '../Components/Graph/Graph';
 import { useColourPickerModalStore, useDataStore } from '../Zustand/Store';
+import { ColourPickerModalStore, DataTypeStore } from '../Types/Types';
 
 const Home = () => {
   const { data, isError, isLoading, error } = useQuery({
@@ -12,14 +13,14 @@ const Home = () => {
     queryFn: fetchData,
   });
 
-  const setData = useDataStore((state) => state.setData);
+  const setData = useDataStore((state: DataTypeStore) => state.setData);
 
   useEffect(() => {
     if (!isLoading && !isError) setData(data.data);
   }, [data, isLoading, isError]);
 
   const colourPickerVisible = useColourPickerModalStore(
-    (state) => state.visible
+    (state: ColourPickerModalStore) => state.visible
   );
 
   return (

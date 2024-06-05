@@ -69,3 +69,9 @@ export type ColourPickerTypeStore = {
   setColour: (req: string) => void;
   setBackground: (req: string) => void;
 };
+
+export type ColType = {
+  columnId: string;
+  width: number;
+  resizable: boolean;
+};
